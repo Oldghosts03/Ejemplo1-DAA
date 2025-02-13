@@ -1,16 +1,40 @@
 package com.example.ejemplo1
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ejemplo1.ui.theme.Ejemplo1Theme
 
@@ -20,31 +44,94 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Ejemplo1Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                GreetingPreview()
             }
         }
     }
 }
 
+
+@Preview
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = name,
-        fontSize = 100.sp,
-        lineHeight = 200.sp
-    )
+fun GreetingPreview(){
+        setContent()
 }
 
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    Ejemplo1Theme {
-        Greeting("Android")
-        Greeting("Sofi")
+fun setContent(){
+    Column {
+        SimpleButton()
+        ButtonWithColor()
+        ButtonWithTwoTextView()
+        ButtonWithIcon()
+    }
+}
+
+@Composable
+fun SimpleButton() {
+    Button(onClick = {
+        //your onclick code here
+    })
+    {
+        Text(text = "Simple Button")
+    }
+}
+
+@Composable
+fun ButtonWithColor(){
+    Button(onClick = {
+        //your onclick code
+    },
+        colors = ButtonDefaults.buttonColors(Color.DarkGray))
+
+    {
+        Text(text = "Button with gray background",color = Color.White)
+    }
+}
+
+@Composable
+fun ButtonWithTwoTextView() {
+    Button(onClick = {
+        //your onclick code here
+    }) {
+        Text(text = "Click ", color = Color.Magenta)
+        Text(text = "Here", color = Color.Green)
+    }
+}
+
+@Composable
+fun ButtonWithIcon() {
+    Button(onClick = {}) {
+        Image(
+            painterResource(id = R.drawable.carrito),
+            contentDescription ="Cart button icon",
+            modifier = Modifier.size(20.dp))
+
+        Text(text = "Add to cart",Modifier.padding(start = 10.dp))
+    }
+}
+
+//Rectangulo
+@Composable
+fun ButtonWithRectangleShape() {
+    Button(onClick = {}, shape = RectangleShape) {
+        Text(text = "Forma de Rectangulo")
+    }
+}
+//Esquina Redondeada:
+
+@Composable
+fun ButtonWithRoundCornerShape() {
+    Button(onClick = {}, shape = RoundedCornerShape(20.dp)) {
+        Text(text = "Esquina redondeada")
+    }
+}
+
+//Esquina con terminacion recta:
+
+@Composable
+fun ButtonWithCutCornerShape() {
+    Button(onClick = {}, shape = CutCornerShape(10)) {
+        Text(text = "Esquina en corte")
     }
 }
