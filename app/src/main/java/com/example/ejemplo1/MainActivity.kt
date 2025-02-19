@@ -70,6 +70,7 @@ fun SimpleImage() {
         painter = painterResource(id = R.drawable.dboi),
         contentDescription = "Andy Rubin",
         modifier = Modifier.fillMaxWidth()
+            .padding(top= 50.dp)
     )
 }
 
@@ -85,7 +86,8 @@ fun TextField() {
             onValueChange = { it ->
                 text = it
             },
-            placeholder = { Text(text = "Valor 1") },
+            label = { Text(text = "Valor 1") },
+            placeholder = { Text(text = "Teclea el primer valor") },
         )
     }
 }
@@ -102,7 +104,8 @@ fun TextField2() {
             onValueChange = { it ->
                 text = it
             },
-            placeholder = { Text(text = "Valor 2") },
+            label = { Text(text = "Valor 2") },
+            placeholder = { Text(text = "Teclea el segundo valor") },
         )
     }
 }
@@ -114,6 +117,6 @@ fun SimpleButton() {
     },
         colors = ButtonDefaults.buttonColors(Color.Blue))
     {
-        Text(text = "Calcular")
+        Text(text = "Calcular", color = Color.White)
     }
 }
