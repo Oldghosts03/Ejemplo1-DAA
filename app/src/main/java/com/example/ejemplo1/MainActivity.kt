@@ -28,6 +28,8 @@ import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.getSelectedText
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.ejemplo1.ui.theme.Ejemplo1Theme
@@ -38,85 +40,100 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Ejemplo1Theme {
                 GreetingPreview()
             }
         }
     }
-}
 
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview(){
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            SimpleImage()
-            TextField()
-            TextField2()
-            SimpleButton()
-        }
+    Content()
+}
 
-
-
+@Composable
+fun Content(){
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        SimpleImage()
+        SimpleButton()
+    }
 }
 
 @Composable
 fun SimpleImage() {
     Image(
         painter = painterResource(id = R.drawable.dboi),
-        contentDescription = "Andy Rubin",
-        modifier = Modifier.fillMaxWidth()
-            .padding(top= 50.dp)
+        contentDescription = "dboi",
+        modifier = Modifier.fillMaxWidth(),
+        alignment = Alignment.TopCenter
     )
 }
 
 @Composable
-fun TextField() {
+fun TextField1():TextFieldValue {
     var text by remember { mutableStateOf(TextFieldValue("")) }
-    Column(
-        modifier = Modifier.padding(top = 30.dp, bottom = 20.dp)
-    ) {
+    Column (
+        modifier = Modifier.padding(top = 20.dp)
+    ){
         TextField(
             value = text,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            onValueChange = { it ->
+            onValueChange = {
                 text = it
             },
             label = { Text(text = "Valor 1") },
             placeholder = { Text(text = "Teclea el primer valor") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
     }
+    return text
 }
 
 @Composable
-fun TextField2() {
+fun TextField2():TextFieldValue {
     var text by remember { mutableStateOf(TextFieldValue("")) }
-    Column(
-        modifier = Modifier.padding(top = 10.dp, bottom = 20.dp)
-    ) {
+    Column (
+        modifier = Modifier.padding(top = 20.dp)
+    ){
         TextField(
             value = text,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            onValueChange = { it ->
+            onValueChange = {
                 text = it
             },
             label = { Text(text = "Valor 2") },
             placeholder = { Text(text = "Teclea el segundo valor") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
     }
+    return text
 }
 
 @Composable
 fun SimpleButton() {
-    Button(onClick = {
-        //your onclick code here
-    },
-        colors = ButtonDefaults.buttonColors(Color.Blue))
-    {
-        Text(text = "Calcular", color = Color.White)
+    var numero1 = TextField1()
+    var numero2 = TextField2()
+    var resultado by remember { mutableStateOf(0)}
+    Button(
+        onClick = { /* Acción al hacer clic */
+            val num1 = numero1.text.toInt()
+            val num2 = numero2.text.toInt()
+            resultado = num1 + num2
+        },
+        modifier = Modifier
+            .padding(top = 10.dp) // Agrega 32.dp de padding en la parte superior
+
+    ) {
+        Text("Calcular")
     }
+
+    Text(
+        text = "Resultado: $resultado",
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .padding(10.dp)
+    )
 }
